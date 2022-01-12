@@ -1,4 +1,3 @@
-# Table of Contents:
 ## Description
 This script performs backups of virtual machines residing on ESX(i) 3.5/4.x/5.x/6.x/7.x servers using methodology similar to [VMware's VCB](http://www.vmware.com/products/vi/consolidated_backup.html) tool. The script takes snapshots of live running virtual machines, backs up the  master VMDK(s) and then upon completion, deletes the snapshot until the next backup. The only caveat is that it utilizes resources available to the Service Console of the ESX server or Busybox Console (Tech Support Mode) of the ESXi server  running the backups as opposed to following the traditional method of offloading virtual machine backups through a VCB proxy.
 This script has been tested on ESX 3.5/4.x/5.x and ESXi 3.5/4.x/5.x/6.x/7.x and supports the following backup mediums: LOCAL STORAGE, SAN and NFS. The script is non-interactive and can be setup to run via cron. Currently, this script accepts a text file that lists the display names of virtual machine(s) that are to be backed up. Additionally, one can specify a folder containing configuration files on a per VM basis for  granular control over backup policies.
@@ -58,16 +57,20 @@ SSH console access to ESX(i) host
 1) Download ghettoVCB from [github](https://github.com/lamw/ghettoVCB/downloads) by clicking on the ZIP button at the top and upload to either your ESX or ESXi system (use scp or WinSCP to transfer the file)
 
 2) Extract the contents of the zip file (filename will vary):
-`# unzip ghettoVCB-master.zip
+
+```
+# unzip ghettoVCB-master.zip
 
 Archive:  ghettoVCB-master.zip
-   creating: ghettoVCB-master/
-  inflating: ghettoVCB-master/README
-  inflating: ghettoVCB-master/ghettoVCB-restore.sh
-  inflating: ghettoVCB-master/ghettoVCB-restore_vm_restore_configuration_template
-  inflating: ghettoVCB-master/ghettoVCB-vm_backup_configuration_template
-  inflating: ghettoVCB-master/ghettoVCB.conf
-  inflating: ghettoVCB-master/ghettoVCB.sh`
+creating: ghettoVCB-master/
+inflating: ghettoVCB-master/README
+inflating: ghettoVCB-master/ghettoVCB-restore.sh
+inflating: ghettoVCB-master/ghettoVCB-restore_vm_restore_configuration_template
+inflating: ghettoVCB-master/ghettoVCB-vm_backup_configuration_template
+inflating: ghettoVCB-master/ghettoVCB.conf
+inflating: ghettoVCB-master/ghettoVCB.sh
+```
+  
 ## Configurations
 ## Usage
 ## Sample Execution   
