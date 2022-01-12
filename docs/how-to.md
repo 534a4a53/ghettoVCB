@@ -52,7 +52,22 @@ Support mulitple running instances of ghettoVCB NEW!
 Configure VM shutdown/startup order NEW!
 Support changing custom VM name during restore NEW! 
 ## Requirements
+VMs running on ESX(i) 3.5/4.x+/5.x
+SSH console access to ESX(i) host
 ## Setup
+1) Download ghettoVCB from [github](https://github.com/lamw/ghettoVCB/downloads) by clicking on the ZIP button at the top and upload to either your ESX or ESXi system (use scp or WinSCP to transfer the file)
+
+2) Extract the contents of the zip file (filename will vary):
+`# unzip ghettoVCB-master.zip
+
+Archive:  ghettoVCB-master.zip
+   creating: ghettoVCB-master/
+  inflating: ghettoVCB-master/README
+  inflating: ghettoVCB-master/ghettoVCB-restore.sh
+  inflating: ghettoVCB-master/ghettoVCB-restore_vm_restore_configuration_template
+  inflating: ghettoVCB-master/ghettoVCB-vm_backup_configuration_template
+  inflating: ghettoVCB-master/ghettoVCB.conf
+  inflating: ghettoVCB-master/ghettoVCB.sh`
 ## Configurations
 ## Usage
 ## Sample Execution   
