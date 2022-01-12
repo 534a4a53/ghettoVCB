@@ -302,16 +302,86 @@ Ensure that you do not edit past this section:
 
 ## Usage
 
+```
+# ./ghettoVCB.sh 
+###############################################################################
+#
+# ghettoVCB for ESX/ESXi 3.5, 4.x+ and 5.x
+# Author: William Lam
+# http://www.virtuallyghetto.com/
+# Documentation: http://communities.vmware.com/docs/DOC-8760
+# Created: 11/17/2008
+# Last modified: 2012_12_17 Version 0
+#
+###############################################################################
 
+Usage: ghettoVCB.sh [options]
+
+OPTIONS:
+   -a     Backup all VMs on host
+   -f     List of VMs to backup
+   -m     Name of VM to backup (overrides -f)
+   -c     VM configuration directory for VM backups
+   -g     Path to global ghettoVCB configuration file
+   -l     File to output logging
+   -w     ghettoVCB work directory (default: )
+   -d     Debug level [info|debug|dryrun] (default: info)
+
+(e.g.)
+
+Backup VMs stored in a list
+    ./ghettoVCB.sh -f vms_to_backup
+
+Backup a single VM
+    ./ghettoVCB.sh -m vm_to_backup
+
+Backup all VMs residing on this host
+    ./ghettoVCB.sh -a
+
+Backup all VMs residing on this host except for the VMs in the exclusion list
+    ./ghettoVCB.sh -a -e vm_exclusion_list
+
+Backup VMs based on specific configuration located in directory
+    ./ghettoVCB.sh -f vms_to_backup -c vm_backup_configs
+
+Backup VMs using global ghettoVCB configuration file
+    ./ghettoVCB.sh -f vms_to_backup -g /global/ghettoVCB.conf
+
+Output will log to /tmp/ghettoVCB.log (consider logging to local or remote datastore to persist logs)
+    ./ghettoVCB.sh -f vms_to_backup -l /vmfs/volume/local-storage/ghettoVCB.log
+
+Dry run (no backup will take place)
+    ./ghettoVCB.sh -f vms_to_backup -d dryrun
+```
+
+The input to this script is a file that contains the display name of the  virtual machine(s) separated by a newline. When creating this file on a  non-Linux/UNIX system, you may introduce ^M character which can cause  the script to miss-behave. To ensure this does not occur, plesae create  the file on the ESX/ESXi host.
+
+Here is a sample of what the file would look like:
+
+```
+[root@himalaya ~]# cat vms_to_backup
+vCOPS
+vMA
+vCloudConnector
+```
 
 ## Sample Execution   
-## Dry run Mode
-## Debug backup Mode
-## Backup VMs stored in a list
-## Backup All VMs residing on specific ESX(i) host
-## Backup All VMs residing on specific ESX(i) host and exclude the VMs in the exclusion list
-## Backup VMs using individual backup policies
-## Enable compression for backups
+Dry run Mode
+Debug Mode
+Backup VMs stored in a list
+Backup Single VM using command-line
+Backup All VMs residing on specific ESX(i) host
+Backup VMs based on individual VM backup policies
+
+
+### Dry run Mode
+### Debug backup Mode
+### Backup VMs stored in a list
+### Backup All VMs residing on specific ESX(i) host
+### Backup All VMs residing on specific ESX(i) host and exclude the VMs in the exclusion list
+### Backup VMs using individual backup policies
+### Enable compression for backups
+
 ## Email Backup Logs
 ## Restore backups (ghettoVCB-restore.sh)
 ## Cronjob FAQ
