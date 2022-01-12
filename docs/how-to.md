@@ -366,16 +366,106 @@ vCloudConnector
 ```
 
 ## Sample Execution   
-Dry run Mode
-Debug Mode
-Backup VMs stored in a list
-Backup Single VM using command-line
-Backup All VMs residing on specific ESX(i) host
-Backup VMs based on individual VM backup policies
-
 
 ### Dry run Mode
+Note: This execution mode provides a qucik summary of details on whether a given set of VM(s)/VMDK(s) will be backed up. It provides additional information such as VMs that may have snapshots, VMDK(s) that are configured as independent disks, or other issues that may cause a VM or VMDK to not backed up.
+
+ 
+
+Log verbosity: dryrun
+Log output: stdout & /tmp (default) 
+Logs by default will be stored in /tmp, these log files may not persist through reboots, especially when dealing with ESXi. You should log to either a local or remote datastore to ensure that logs are kept upon a reboot.
+
+```
+[root@himalaya ghettoVCB]# ./ghettoVCB.sh -f vms_to_backup -d dryrun
+Logging output to "/tmp/ghettoVCB-2011-03-13_15-19-57.log" ...
+2011-03-13 15:19:57 -- info: ============================== ghettoVCB LOG START ==============================
+
+2011-03-13 15:19:57 -- info: CONFIG - VERSION = 2011_03_13_1
+2011-03-13 15:19:57 -- info: CONFIG - GHETTOVCB_PID = 30157
+2011-03-13 15:19:57 -- info: CONFIG - VM_BACKUP_VOLUME = /vmfs/volumes/dlgCore-NFS-bigboi.VM-Backups/WILLIAM_BACKUPS
+2011-03-13 15:19:57 -- info: CONFIG - VM_BACKUP_ROTATION_COUNT = 3
+2011-03-13 15:19:57 -- info: CONFIG - VM_BACKUP_DIR_NAMING_CONVENTION = 2011-03-13_15-19-57
+2011-03-13 15:19:57 -- info: CONFIG - DISK_BACKUP_FORMAT = thin
+2011-03-13 15:19:57 -- info: CONFIG - POWER_VM_DOWN_BEFORE_BACKUP = 0
+2011-03-13 15:19:57 -- info: CONFIG - ENABLE_HARD_POWER_OFF = 0
+2011-03-13 15:19:57 -- info: CONFIG - ITER_TO_WAIT_SHUTDOWN = 3
+2011-03-13 15:19:57 -- info: CONFIG - POWER_DOWN_TIMEOUT = 5
+2011-03-13 15:19:57 -- info: CONFIG - SNAPSHOT_TIMEOUT = 15
+2011-03-13 15:19:57 -- info: CONFIG - LOG_LEVEL = dryrun
+2011-03-13 15:19:57 -- info: CONFIG - BACKUP_LOG_OUTPUT = /tmp/ghettoVCB-2011-03-13_15-19-57.log
+2011-03-13 15:19:57 -- info: CONFIG - VM_SNAPSHOT_MEMORY = 0
+2011-03-13 15:19:57 -- info: CONFIG - VM_SNAPSHOT_QUIESCE = 0
+2011-03-13 15:19:57 -- info: CONFIG - VMDK_FILES_TO_BACKUP = all
+2011-03-13 15:19:57 -- info: CONFIG - EMAIL_LOG = 0
+2011-03-13 15:19:57 -- info:
+2011-03-13 15:19:57 -- dryrun: ###############################################
+2011-03-13 15:19:57 -- dryrun: Virtual Machine: scofield
+2011-03-13 15:19:57 -- dryrun: VM_ID: 704
+2011-03-13 15:19:57 -- dryrun: VMX_PATH: /vmfs/volumes/himalaya-local-SATA.RE4-GP:Storage/scofield/scofield.vmx
+2011-03-13 15:19:57 -- dryrun: VMX_DIR: /vmfs/volumes/himalaya-local-SATA.RE4-GP:Storage/scofield
+2011-03-13 15:19:57 -- dryrun: VMX_CONF: scofield/scofield.vmx
+2011-03-13 15:19:57 -- dryrun: VMFS_VOLUME: himalaya-local-SATA.RE4-GP:Storage
+2011-03-13 15:19:57 -- dryrun: VMDK(s):
+2011-03-13 15:19:58 -- dryrun:  scofield_3.vmdk 3 GB
+2011-03-13 15:19:58 -- dryrun:  scofield_2.vmdk 2 GB
+2011-03-13 15:19:58 -- dryrun:  scofield_1.vmdk 1 GB
+2011-03-13 15:19:58 -- dryrun:  scofield.vmdk   5 GB
+2011-03-13 15:19:58 -- dryrun: INDEPENDENT VMDK(s):
+2011-03-13 15:19:58 -- dryrun: TOTAL_VM_SIZE_TO_BACKUP: 11 GB
+2011-03-13 15:19:58 -- dryrun: ###############################################
+
+2011-03-13 15:19:58 -- dryrun: ###############################################
+2011-03-13 15:19:58 -- dryrun: Virtual Machine: vMA
+2011-03-13 15:19:58 -- dryrun: VM_ID: 1440
+2011-03-13 15:19:58 -- dryrun: VMX_PATH: /vmfs/volumes/himalaya-local-SATA.RE4-GP:Storage/vMA/vMA.vmx
+2011-03-13 15:19:58 -- dryrun: VMX_DIR: /vmfs/volumes/himalaya-local-SATA.RE4-GP:Storage/vMA
+2011-03-13 15:19:58 -- dryrun: VMX_CONF: vMA/vMA.vmx
+2011-03-13 15:19:58 -- dryrun: VMFS_VOLUME: himalaya-local-SATA.RE4-GP:Storage
+2011-03-13 15:19:58 -- dryrun: VMDK(s):
+2011-03-13 15:19:58 -- dryrun:  vMA-000002.vmdk 5 GB
+2011-03-13 15:19:58 -- dryrun: INDEPENDENT VMDK(s):
+2011-03-13 15:19:58 -- dryrun: TOTAL_VM_SIZE_TO_BACKUP: 5 GB
+2011-03-13 15:19:58 -- dryrun: Snapshots found for this VM, please commit all snapshots before continuing!
+2011-03-13 15:19:58 -- dryrun: THIS VIRTUAL MACHINE WILL NOT BE BACKED UP DUE TO EXISTING SNAPSHOTS!
+2011-03-13 15:19:58 -- dryrun: ###############################################
+
+2011-03-13 15:19:58 -- dryrun: ###############################################
+2011-03-13 15:19:58 -- dryrun: Virtual Machine: vCloudConnector
+2011-03-13 15:19:58 -- dryrun: VM_ID: 2064
+2011-03-13 15:19:58 -- dryrun: VMX_PATH: /vmfs/volumes/himalaya-local-SATA.RE4-GP:Storage/vCloudConnector/vCloudConnector.vmx
+2011-03-13 15:19:58 -- dryrun: VMX_DIR: /vmfs/volumes/himalaya-local-SATA.RE4-GP:Storage/vCloudConnector
+2011-03-13 15:19:58 -- dryrun: VMX_CONF: vCloudConnector/vCloudConnector.vmx
+2011-03-13 15:19:58 -- dryrun: VMFS_VOLUME: himalaya-local-SATA.RE4-GP:Storage
+2011-03-13 15:19:58 -- dryrun: VMDK(s):
+2011-03-13 15:19:59 -- dryrun:  vCloudConnector.vmdk    3 GB
+2011-03-13 15:19:59 -- dryrun: INDEPENDENT VMDK(s):
+2011-03-13 15:19:59 -- dryrun:  vCloudConnector_1.vmdk  40 GB
+2011-03-13 15:19:59 -- dryrun: TOTAL_VM_SIZE_TO_BACKUP: 3 GB
+2011-03-13 15:19:59 -- dryrun: Snapshots can not be taken for indepdenent disks!
+2011-03-13 15:19:59 -- dryrun: THIS VIRTUAL MACHINE WILL NOT HAVE ALL ITS VMDKS BACKED UP!
+2011-03-13 15:19:59 -- dryrun: ###############################################
+
+2011-03-13 15:19:59 -- info: ###### Final status: OK, only a dryrun. ######
+
+2011-03-13 15:19:59 -- info: ============================== ghettoVCB LOG END ================================
+```
+In the example above, we have 3 VMs to be backed up:
+
+scofield has 4 VMDK(s) that total up to 11GB and does not contain any snapshots/independent disks and this VM should backup without any issues
+vMA has 1 VMDK but it also contains a snapshot and clearly this VM will not be backed up until the snapshot has been committed
+vCloudConnector has 2 VMDK(s), one which is 3GB and another which is 40GB and configured as an independent disk. Since snapshots do not affect independent disk, only the 3GB VMDK will be backed up for this VM as denoted by the ```"TOTAL_VM_SIZE_TO_BACKUP"```
 ### Debug backup Mode
+Note: This execution modes provides more in-depth information about environment/backup process including additional storage debugging information which provides information about both the source/destination datastore pre and post backups. This can be very useful in troubleshooting backups
+
+Log verbosity: debug
+Log output: stdout & /tmp (default) 
+Logs by default will be stored in /tmp, these log files may not persist  through reboots, especially when dealing with ESXi. You should log to  either a local or remote datastore to ensure that logs are kept upon a  reboot.
+
+```
+
+```
+
 ### Backup VMs stored in a list
 ### Backup All VMs residing on specific ESX(i) host
 ### Backup All VMs residing on specific ESX(i) host and exclude the VMs in the exclusion list
