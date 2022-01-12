@@ -462,10 +462,6 @@ Log verbosity: debug
 Log output: stdout & /tmp (default) 
 Logs by default will be stored in /tmp, these log files may not persist  through reboots, especially when dealing with ESXi. You should log to  either a local or remote datastore to ensure that logs are kept upon a  reboot.
 
-```
-
-```
-
 ### Backup VMs stored in a list
 ### Backup All VMs residing on specific ESX(i) host
 ### Backup All VMs residing on specific ESX(i) host and exclude the VMs in the exclusion list
