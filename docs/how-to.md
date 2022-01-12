@@ -111,150 +111,152 @@ VM_BACKUP_ROTATION_COUNT=3
 Defining whether the VM is powered down or not prior to backup (1 = enable, 0 = disable):
 
 Note: VM(s) that are powered off will not require snapshoting
-
+```
 POWER_VM_DOWN_BEFORE_BACKUP=0
-
+```
 
 Defining whether the VM can be hard powered off when  "POWER_VM_DOWN_BEFORE_BACKUP" is enabled and VM does not have VMware  Tools installed
-
+```
 ENABLE_HARD_POWER_OFF=0
-
+```
 
 If "ENABLE_HARD_POWER_OFF" is enabled, then this defines the number  of (60sec) iterations the script will before executing a hard power off  when:
-
+```
 ITER_TO_WAIT_SHUTDOWN=3
-
+```
 
 The number (60sec) iterations the script will wait when powering off  the VM and will give up and ignore the particular VM for backup:
-
+```
 POWER_DOWN_TIMEOUT=5
-
+```
 
 The number (60sec) iterations the script will wait when taking a  snapshot of a VM and will give up and ignore the particular VM for  backup:
 
 Note: Default value should suffice
-
+```
 SNAPSHOT_TIMEOUT=15
-
+```
 
 Defining whether or not to enable compression (1 = enable, 0 = disable):
-
+```
 ENABLE_COMPRESSION=0
-
+```
 
 NOTE: With ESXi 3.x/4.x/5.x, there is a limitation of the maximum size of a VM for compression within the unsupported Busybox Console which should not affect backups running classic ESX 3.x,4.x or 5.x. On ESXi 3.x the largest supported VM is 4GB for compression and on ESXi 4.x the largest  supported VM is 8GB. If you try to compress a larger VM, you may run into issues when trying to extract upon a restore. PLEASE TEST THE RESTORE PROCESS BEFORE MOVING TO PRODUCTION SYSTEMS!
 
 Defining the adapter type for backed up VMDK (DEPERCATED - NO LONGER NEEDED:disappointed_face:
-
+```
 ADAPTER_FORMAT=buslogic
-
+```
 
 Defining whether virtual machine memory is snapped and if quiescing is enabled (1 = enable, 0 = disable):
 
 Note: By default both are disabled
-
+```
 VM_SNAPSHOT_MEMORY=0
 VM_SNAPSHOT_QUIESCE=0
-
+```
 
 NOTE: VM_SNAPSHOT_MEMORY is only used to ensure when the snapshot is taken, it's memory contents  are also captured. This is only relevant to the actual snapshot and it's  not used in any shape/way/form in regards to the backup. All backups  taken whether your VM is running or offline will result in an offline VM  backup when you restore. This was originally added for debugging  purposes and in generally should be left disabled
 
 Defining VMDK(s) to backup from a particular VM either a list of vmdks or "all"
-
+```
 VMDK_FILES_TO_BACKUP="myvmdk.vmdk"
- 
+ ```
 
 Defining whether or not VM(s) with existing snapshots can be backed up. This flag means it will CONSOLIDATE ALL EXISTING SNAPSHOTS for a VM prior to starting the backup (1 = yes, 0 = no):
-
+```
 ALLOW_VMS_WITH_SNAPSHOTS_TO_BE_BACKEDUP=0
- 
+```
 
 Defining the order of which VM(s) should be shutdown first, especially if there is a dependency between multiple VM(s). This should be a comma seperate list of VM(s)
-
+```
 VM_SHUTDOWN_ORDER=vm1,vm2,vm3
- 
+```
 
 Defining the order of VM(s) that should be started up first after backups have completed, especially if there is a dependency between multiple VM(s). This should be a comma seperate list of VM(s)
-
+```
 VM_STARTUP_ORDER=vm3,vm2,vm1
- 
-
- 
+ ```
 
 Defining NON-PERSISTENT NFS Backup Volume (1 = yes, 0 = no):
-
+```
 ENABLE_NON_PERSISTENT_NFS=0
-NOTE: This is meant for environments that do not want a persisted connection to their NFS backup volume and allows the NFS volume to only be mounted during backups. The script expects the following 5 variables to be defined if this is to be used: UNMOUNT_NFS, NFS_SERVER, NFS_MOUNT, NFS_LOCAL_NAME and NFS_VM_BACKUP_DIR
+```
+
+NOTE: This is meant for environments that do not want a persisted connection to their NFS backup volume and allows the NFS volume to only be mounted during backups. The script expects the following 5 variables to be defined if this is to be used: ```UNMOUNT_NFS, NFS_SERVER, NFS_MOUNT, NFS_LOCAL_NAME and NFS_VM_BACKUP_DIR```
 
  
 
 Defining whether or not to unmount the NFS backup volume (1 = yes, 0 = no):
-
+```
 UNMOUNT_NFS=0
+```
 Defining the NFS server address (IP/hostname):
-
+```
 NFS_SERVER=172.51.0.192
+```
 Defining the NFS export path:
-
+```
 NFS_MOUNT=/upload
+```
 Defining the NFS datastore name:
-
+```
 NFS_LOCAL_NAME=backup
+```
 Defining the NFS backup directory for VMs:
-
+```
 NFS_VM_BACKUP_DIR=mybackups
- 
+```
 
 NOTE: Only supported if you are running vSphere 4.1 and this feature is experimental. If you are having issues with sending mail, please take a look at Email Backup Log section
 
 Defining whether or not to email backup logs (1 = yes, 0 = no):
-
+```
 EMAIL_LOG=1
-
+```
 
 Defining whether or not to email message will be deleted off the host  whether it is successful in sending, this is used for debugging  purposes. (1 = yes, 0 = no):
-
+```
 EMAIL_DEBUG=1
-
+```
 
 Defining email server:
-
+```
 EMAIL_SERVER=auroa.primp-industries.com
-
+```
 
 Defining email server port:
-
+```
 EMAIL_SERVER_PORT=25
- 
+```
 
 Defining email delay interval (useful if you have slow SMTP server and would like to include a delay in netcat using -i param, default is 1second):
-
+```
 EMAIL_DELAY_INTERVAL=1
-
+```
 Defining recipient of the email:
-
+```
 EMAIL_TO=auroa@primp-industries.com
-
+```
 
 Defining from user which may require specific domain entry depending on email server configurations:
-
+```
 EMAIL_FROM=root@ghettoVCB
- 
+ ```
 
 Defining to support RSYNC symbolic link creation (1 = yes, 0 = no):
-
+```
 RSYNC_LINK=0
- 
+ ```
 
 Note: This  enables an automatic creation of a generic symbolic link (both a  relative & absolution path) in which users can refer to run  replication backups using rsync from a remote host. This does not  actually support rsync backups with ghettoVCB. Please take a look at the  Rsync Section of the documentation for more details.
 
- 
-
 A sample global ghettoVCB configuration file is included with the download called ghettoVCB.conf.  It contains the same variables as defined from above and allows a user  to customize and define multiple global configurations based on a user's  environment.
- 
 
+```
+# cat ghettoVCB.conf
 
-# cat ghettoVCB.conf 
 VM_BACKUP_VOLUME=/vmfs/volumes/dlgCore-NFS-bigboi.VM-Backups/WILLIAM_BACKUPS
 DISK_BACKUP_FORMAT=thin
 VM_BACKUP_ROTATION_COUNT=3
@@ -282,12 +284,11 @@ EMAIL_FROM=root@ghettoVCB
 WORKDIR_DEBUG=0
 VM_SHUTDOWN_ORDER=
 VM_STARTUP_ORDER=
-
+```
 To override any existing configurations within the ghettoVCB.sh script  and to use a global configuration file, user just needs to specify the  new flag -g and path to global configuration file (For an example,  please refer to the sample execution section of the documenation)
 
  
-
-Running multiple instances of ghettoVCB is now supported with the latest release by specifying the working directory (-w) flag.
+Running multiple instances of ghettoVCB is now supported with the latest release by specifying the working directory ```(-w)``` flag.
 
 By default, the working directory of the ghettoVCB instance is /tmp/ghettoVCB.work and you can run another instance by providing an alternate working directory. You should try to minimize the number of ghettoVCB instances running on your ESXi host as it does consume some amount of resources when running in the ESXi Shell. This is considered an experimental feature, so please test in a development environment to ensure everything is working prior to moving to production system.
 
@@ -295,9 +296,14 @@ By default, the working directory of the ghettoVCB instance is /tmp/ghettoVCB.wo
 
 Ensure that you do not edit past this section:
 
+```
 ########################## DO NOT MODIFY PAST THIS LINE ##########################
+```
 
 ## Usage
+
+
+
 ## Sample Execution   
 ## Dry run Mode
 ## Debug backup Mode
