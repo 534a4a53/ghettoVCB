@@ -1,3 +1,4 @@
+#!/bin/sh
 # Author: William Lam
 # Created Date: 11/17/2008
 # http://www.williamlam.com/
@@ -8,7 +9,7 @@
 #                   User Definable Parameters
 ##################################################################
 
-LAST_MODIFIED_DATE=2021_10_20
+LAST_MODIFIED_DATE=2023_09_29
 VERSION=1
 
 # directory that all VM backups should go (e.g. /vmfs/volumes/SAN_LUN1/mybackupdir)
@@ -176,7 +177,7 @@ VM_BACKUP_DIR_NAMING_CONVENTION="$(date +%F_%H-%M-%S)"
 printUsage() {
         echo "###############################################################################"
         echo "#"
-        echo "# ghettoVCB for ESX/ESXi 3.5, 4.x, 5.x, 6.x & 7.x"
+        echo "# ghettoVCB for ESX/ESXi 3.5, 4.x, 5.x, 6.x, 7.x & 8.x"
         echo "# Author: William Lam"
         echo "# http://www.virtuallyghetto.com/"
         echo "# Documentation: http://communities.vmware.com/docs/DOC-8760"
@@ -308,6 +309,7 @@ sanityCheck() {
     ESX_RELEASE=$(uname -r)
 
     case "${ESX_VERSION}" in
+        8.0.0|8.0.1|8.0.2)          VER=8; break;;
         7.0.0|7.0.1|7.0.2|7.0.3)    VER=7; break;;
         6.0.0|6.5.0|6.7.0)          VER=6; break;;
         5.0.0|5.1.0|5.5.0)          VER=5; break;;
@@ -903,7 +905,7 @@ ghettoVCB() {
             #1 = readonly
             #0 = readwrite
             logger "debug" "Mounting NFS: ${NFS_SERVER}:${NFS_MOUNT} to /vmfs/volume/${NFS_LOCAL_NAME}"
-	    if [[ ${ESX_RELEASE} == "5.5.0" ]] || [[ ${ESX_RELEASE} == "6.0.0" || ${ESX_RELEASE} == "6.5.0" || ${ESX_RELEASE} == "6.7.0" || ${ESX_RELEASE} == "7.0.0" || ${ESX_RELEASE} == "7.0.1" || ${ESX_RELEASE} == "7.0.2" || ${ESX_RELEASE} == "7.0.3" ]] ; then
+        if [[ ${ESX_RELEASE} != "3i" ]] || [[ ${ESX_RELEASE} != "3.5.0" || ${ESX_RELEASE} != "4.0.0" || ${ESX_RELEASE} != "4.1.0" || ${ESX_RELEASE} != "5.0.0" || ${ESX_RELEASE} != "5.1.0" ]] ; then
                 ${VMWARE_CMD} hostsvc/datastore/nas_create "${NFS_LOCAL_NAME}" "${NFS_VERSION}" "${NFS_MOUNT}" 0 "${NFS_SERVER}"
             else
                 ${VMWARE_CMD} hostsvc/datastore/nas_create "${NFS_LOCAL_NAME}" "${NFS_SERVER}" "${NFS_MOUNT}" 0
